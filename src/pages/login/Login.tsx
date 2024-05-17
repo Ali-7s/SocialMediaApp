@@ -1,4 +1,4 @@
-import {Box, Button, TextField} from "@mui/material";
+import {Box, Button, TextField, Typography} from "@mui/material";
 import React, {useEffect, useState} from "react";
 import axios from "axios";
 import {UserLogin} from "../../types.tsx";
@@ -26,6 +26,11 @@ const Login = () => {
     const handleLoginClick  = () => {
         handleLogin()
         console.log(user)
+    }
+
+    const handleSignUpClick = () => {
+        console.log("Sign up clicked")
+        navigate("/sign-up")
     }
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -70,6 +75,7 @@ const Login = () => {
                     >
                     </TextField>
                     <Button sx = { { margin: "5px", color: "#61777F"}} onClick={handleLoginClick}>Login</Button>
+                    <Typography sx={ { color: "black" }}>Don't have an account? <Button onClick={handleSignUpClick}>Sign up</Button></Typography>
                 </form>
             </Box>
 
