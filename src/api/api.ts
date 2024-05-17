@@ -15,11 +15,11 @@ const getAxiosConfig = () : AxiosRequestConfig => {
 
 export async function getPosts(): Promise<Post[]> {
     const response = await axios.get(`${API_URL}/post/all`, getAxiosConfig())
-    return response.data;
+    return response.data.data.posts;
 }
 
 export async function createNewPost(  post  : PostRequest) {
-    return await axios.post(`${API_URL}/post`, post, getAxiosConfig());
+    return await axios.post(`${API_URL}/post/add`, post, getAxiosConfig());
 }
 
 export async function getAuthedUser(): Promise<User | undefined> {
