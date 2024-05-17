@@ -4,13 +4,13 @@ export type User = {
     "email": string,
     "role": string,
     "createdAt": string,
-    "photoUrl": string
+    "photoUrl": string,
 };
 
 export type Post = {
     id: number;
     content: string;
-    createdAt: string;
+    createdAt: Date;
     user: User;
 };
 
