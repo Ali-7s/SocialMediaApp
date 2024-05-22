@@ -1,3 +1,5 @@
+import React from "react";
+
 export type User = {
     "id": number,
     "username": string,
@@ -27,5 +29,14 @@ export type UserLogin = {
 
 export type PostRequest = {
     content: string
+}
+
+export type UserContextProviderProps = {
+    children: React.ReactNode;
+}
+
+export type UserContextType = {
+    user: User,
+    setUser:  React.Dispatch<React.SetStateAction<User>>
 }
 
