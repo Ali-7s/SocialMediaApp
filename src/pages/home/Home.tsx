@@ -5,24 +5,16 @@ import {Sidebar} from "../../components/sidebar/Sidebar.tsx";
 import {User} from "../../types.tsx";
 import {Box} from "@mui/material";
 import CreatePostBox from "../../components/createpost/CreatePostBox.tsx";
-import {useEffect, useState} from "react";
+import { useEffect, useState} from "react";
+import {useUserContext} from "../../hooks/useUserContext.tsx";
 
 const Home = ( ) => {
-    const [ user, setUser] = useState<User>(
-        {
-            "id": 0,
-            "username": "",
-            "email": "",
-            "role": "",
-            "createdAt": "",
-            "photoUrl": "",
-        }
-    )
-
+    const {user, setUser} = useUserContext();
+    const [posts, setPosts] = useState<Post[]>([])
 
     useEffect(() => {
         getAuthedUser().then( user => setUser(user as User));
-    }, []);
+    }, [setUser]);
 
 
     const {data, error, isSuccess} = useQuery({
