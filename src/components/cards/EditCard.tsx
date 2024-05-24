@@ -3,10 +3,10 @@ import CardContent from '@mui/material/CardContent';
 import {Avatar, Button, CardActions, CardHeader, TextField, Typography} from "@mui/material";
 import {Post, UpdatePostRequest} from "../../types.tsx";
 import React, {useEffect, useState} from "react";
-import {formatDate} from "./PostCard.tsx";
 import {useMutation, useQueryClient} from "@tanstack/react-query";
 import { updatePost} from "../../api/api.ts";
 import {toastSuccess} from "../../services/ToastService.tsx";
+import {formatDate} from "./util/FormatDate.tsx";
 
 type EditCardProps = {
     data: Post
