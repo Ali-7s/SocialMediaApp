@@ -5,7 +5,6 @@ import {Post, UpdatePostRequest} from "../../types.tsx";
 import React, {useEffect, useState} from "react";
 import {useMutation, useQueryClient} from "@tanstack/react-query";
 import { updatePost} from "../../api/api.ts";
-import {toastSuccess} from "../../services/ToastService.tsx";
 import {formatDate} from "./util/FormatDate.tsx";
 
 type EditCardProps = {
@@ -39,7 +38,6 @@ const EditCard = ({data, toggleDialog} : EditCardProps)  => {
     const updateMutation = useMutation({
         mutationFn: updatePost,
         onSuccess: () => {
-            toastSuccess("Post successfully updated")
             queryClient.invalidateQueries( {queryKey: ["posts"]}).then();
         },
         onError: error => {
