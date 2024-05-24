@@ -1,4 +1,3 @@
-
 import {
     Avatar, Box,
     Button,
@@ -6,8 +5,9 @@ import {
     Typography
 } from "@mui/material";
 import React, {useState} from "react";
-import {PostRequest, User} from "../../types.tsx";
+import { PostRequest, User} from "../../types.tsx";
 import {createNewPost} from "../../api/api.ts";
+import {useMutation, useQueryClient} from "@tanstack/react-query";
 
 
 interface UserProps {
@@ -15,6 +15,7 @@ interface UserProps {
 }
 
 const CreatePostBox = (  { user } : UserProps) => {
+    const queryClient = useQueryClient()
     const [post, setPost] = useState<PostRequest>({
         content: "",
     })
@@ -24,16 +25,22 @@ const CreatePostBox = (  { user } : UserProps) => {
     }
 
 
-    function handleButtonClick() {
-        createPost().then();
+    const handleButtonClick = () => {
+        createMutation.mutate(post)
     }
 
-    function createPost ()  {
-        const response = createNewPost(post).finally();
-        console.log(post)
-        console.log(response);
-        return response.catch(Error)
-    }
+    const createMutation = useMutation({
+        mutationFn: createNewPost,
+        onSuccess: () => {
+            console.log("Success");
+            queryClient.invalidateQueries( {queryKey: ["posts"]}).then( () => {
+                setPost({...post, content: ""})
+            })
+        },
+        onError: error => {
+            console.error(error)
+        }
+    })
 
     return (
         <>
@@ -44,6 +51,7 @@ const CreatePostBox = (  { user } : UserProps) => {
                 <TextField
                     sx={ { width: "100%"}}
                     name={"content"}
+                    value={post.content}
                     placeholder={"Create a new post!"}
                     fullWidth multiline minRows={2} maxRows={3}
                     onChange={handleChange}
