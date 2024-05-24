@@ -7,7 +7,7 @@ import Layout from "./layout/Layout.tsx";
 
 export const router = createBrowserRouter([
     {
-        path: "/",
+        path: "/home",
         element: <Layout/>,
         children: [
             {
@@ -19,7 +19,7 @@ export const router = createBrowserRouter([
     },
 
     {
-        path: "/login",
+        path: "/",
         element: <Login/>
     },
 
