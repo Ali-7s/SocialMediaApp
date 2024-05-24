@@ -12,7 +12,7 @@ export type User = {
 export type Post = {
     id: number;
     content: string;
-    createdAt: Date;
+    createdAt: string;
     user: User;
 };
 
@@ -28,6 +28,11 @@ export type UserLogin = {
 };
 
 export type PostRequest = {
+    content: string
+}
+
+export type UpdatePostRequest = {
+    id: number,
     content: string
 }
 
