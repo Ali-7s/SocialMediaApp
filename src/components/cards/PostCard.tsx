@@ -1,7 +1,7 @@
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import {Avatar, CardActions, CardHeader, IconButton, Menu, MenuItem, Typography} from "@mui/material";
-import {FavoriteBorderOutlined, MoreVert, ShareOutlined} from "@mui/icons-material";
+import {Avatar, Box, CardActions, CardHeader, IconButton, Menu, MenuItem, Typography} from "@mui/material";
+import {FavoriteBorderOutlined, MoreVert} from "@mui/icons-material";
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import LinkIcon from '@mui/icons-material/Link';
@@ -52,19 +52,20 @@ const PostCard: React.FC<{data: Post}> = ({data })  => {
                                         onClick={handleClick}
 
                     ><MoreVert /></IconButton>}
-                    title= {<Typography variant={"h6"}>{data.user.username}</Typography>}
-                    subheader= {formatDate(data.createdAt.toString())}
+                    title= {<Typography sx={ { fontWeight: "bold"}} >{data.user.displayName}</Typography>}
+                    subheader= {"@"+ data.user.username}
                 />
                 <CardContent>
                     <Typography>
                         {data.content}
                     </Typography>
                 </CardContent>
+                <Box sx={ { display: "flex", alignItems: "center", justifyContent: "space-between"}}>
                 <CardActions>
                     <IconButton aria-label="like"><FavoriteBorderOutlined /></IconButton>
-                    <IconButton aria-label="share"><ShareOutlined /></IconButton>
                 </CardActions>
-
+                <Typography sx={ { marginRight: "10px", color: "#606264"}}>{formatDate(data.createdAt)}</Typography>
+                </Box>
                 <Menu
                     id="basic-menu"
                     anchorEl={anchorEl}
