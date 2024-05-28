@@ -10,6 +10,7 @@ const Signup = () => {
     const [user, setUser] = useState<UserRegistration>(        {
         email: '',
         username: '',
+        displayName: '',
         password: ''
     })
 
@@ -51,6 +52,16 @@ const Signup = () => {
                         required
                         label={"Username"}
                         name="username"
+                        sx = { { width: "100%", border: 0, borderBottom: "1px solid grey", margin: "5px", color: "#61777F"}}
+                        onChange={handleChange}
+                    >
+                    </TextField>
+
+                    <TextField
+                        variant={"standard"}
+                        required
+                        label={"Display Name"}
+                        name="displayName"
                         sx = { { width: "100%", border: 0, borderBottom: "1px solid grey", margin: "5px", color: "#61777F"}}
                         onChange={handleChange}
                     >

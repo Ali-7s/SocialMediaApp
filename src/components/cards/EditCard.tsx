@@ -51,7 +51,7 @@ const EditCard = ({data, toggleDialog} : EditCardProps)  => {
             <Card variant={"outlined"}>
                 <CardHeader
                     avatar={<Avatar aria-label="avatar" src={data.user.photoUrl}/>}
-                    title= {<Typography variant={"h6"}>{data.user.username}</Typography>}
+                    title= {<Typography variant={"h6"}>{data.user.displayName}</Typography>}
                     subheader= {formatDate(data.createdAt.toString())}
                 />
                 <CardContent>

@@ -2,6 +2,7 @@ import React from "react";
 
 export type User = {
     "id": number,
+    "displayName": string,
     "username": string,
     "email": string,
     "role": string,
@@ -19,6 +20,7 @@ export type Post = {
 export type UserRegistration = {
     email: string;
     username: string;
+    displayName: string;
     password: string;
 };
 
