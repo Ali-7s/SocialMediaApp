@@ -43,7 +43,7 @@ export const Sidebar = ( { user } : UserProps )  => {
 
                 <Avatar sx={ { width: "55%", height: "45%", marginRight: "5px", marginTop: "5px"}} aria-label="avatar" src={user.photoUrl}/>
                 <Hidden smDown>
-                    <Typography variant="h5" component="h1" my={2} fontWeight={400} fontSize={18} sx={ {color: "black"}} >Welcome, { user.username }</Typography>
+                    <Typography variant="h5" component="h1" my={2} fontWeight={400} fontSize={18} sx={ {color: "black"}} >Welcome, { user.displayName }</Typography>
                 </Hidden>
                 <Box
                     sx ={{
