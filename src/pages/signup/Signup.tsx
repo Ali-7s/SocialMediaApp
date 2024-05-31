@@ -24,13 +24,15 @@ const Signup = () => {
     }
 
     const handleSignup = () => {
-        axios.post( API_URL + "/auth/register", user, {
-            headers: { 'Content-Type': 'application/json' }
-        }).then(
-            () => {
-                navigate("/")
+       axios.post(API_URL + "/auth/register", user, {
+            headers: {'Content-Type': 'application/json'}
+        }).then( () => {
+            navigate("/")
+       }).catch((error: Error | AxiosError) => {
+            if (axios.isAxiosError(error)) {
+                console.error(error)
             }
-        )
+        })
     }
 
     return (
