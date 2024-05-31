@@ -9,6 +9,7 @@ const UserContextProvider = ( { children } : UserContextProviderProps) => {
     const [user, setUser] = useState<User>( {
         "id": 0,
         "username": "",
+        "displayName": "",
         "email": "",
         "role": "",
         "createdAt": "",
