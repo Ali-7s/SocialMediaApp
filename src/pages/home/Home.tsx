@@ -11,7 +11,7 @@ import { useEffect, useState} from "react";
 import {useUserContext} from "../../hooks/useUserContext.tsx";
 
 const Home = ( ) => {
-    const {user, setUser} = useUserContext();
+    const {setUser} = useUserContext();
     const [posts, setPosts] = useState<Post[]>([])
 
     useEffect(() => {
@@ -53,10 +53,10 @@ const Home = ( ) => {
                         paddingTop: "100px",
                     }
                 }>
-                    <Sidebar user={user as User} />
+                    <Sidebar/>
 
                     <Box sx={{ width: "50vw", overflowY: "scroll"}}>
-                        <CreatePostBox user={user as User}/>
+                        <CreatePostBox/>
                         <Box>
                             {posts?.map(post => <PostCard data={post} key={post.id}/>)}
                         </Box>
