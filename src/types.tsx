@@ -47,3 +47,8 @@ export type UserContextType = {
     setUser:  React.Dispatch<React.SetStateAction<User>>
 }
 
+export type ValidationErrorResponse = {
+    field: string;
+    message: string;
+}
+

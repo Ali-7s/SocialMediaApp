@@ -1,9 +1,10 @@
 import {Box, Button, TextField, Typography} from "@mui/material";
 import React, {useEffect, useState} from "react";
-import axios from "axios";
+import axios, {AxiosError} from "axios";
 import {UserLogin} from "../../types.tsx";
 import {useNavigate} from "react-router-dom";
 import {API_URL} from "../../api/api.ts";
+import {toastError} from "../../services/ToastService.tsx";
 
 const Login = () => {
     const navigate = useNavigate();
@@ -46,7 +47,11 @@ const Login = () => {
                     sessionStorage.setItem("jwt", jwtToken);
                     setAuth(true);
                 }
-            })
+            }).catch((error: Error | AxiosError) => {
+            if (axios.isAxiosError(error)) {
+                toastError("Login failed. Please try again")
+            }
+        })
 
     }
 

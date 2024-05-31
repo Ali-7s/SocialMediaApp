@@ -3,9 +3,11 @@ import React, {useState} from "react";
 import axios, {AxiosError} from "axios";
 import {API_URL} from "../../api/api.ts";
 import {useNavigate} from "react-router-dom";
-import {UserRegistration} from "../../types.tsx";
+import {UserRegistration, ValidationErrorResponse} from "../../types.tsx";
+import {toastError, toastSuccess} from "../../services/ToastService.tsx";
 
 const Signup = () => {
+    const [errors, setErrors] = useState<ValidationErrorResponse[]>([]);
     const navigate = useNavigate();
     const [user, setUser] = useState<UserRegistration>(        {
         email: '',
@@ -27,10 +29,14 @@ const Signup = () => {
        axios.post(API_URL + "/auth/register", user, {
             headers: {'Content-Type': 'application/json'}
         }).then( () => {
+            toastSuccess("Account successfully created")
             navigate("/")
        }).catch((error: Error | AxiosError) => {
             if (axios.isAxiosError(error)) {
-                console.error(error)
+                setErrors(error.response?.data.data.errors)
+                {errors.map((error) => (
+                    toastError(error.message)
+                ))}
             }
         })
     }
