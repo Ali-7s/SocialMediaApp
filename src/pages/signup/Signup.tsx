@@ -1,6 +1,6 @@
 import {Box, Button, TextField} from "@mui/material";
 import React, {useState} from "react";
-import axios from "axios";
+import axios, {AxiosError} from "axios";
 import {API_URL} from "../../api/api.ts";
 import {useNavigate} from "react-router-dom";
 import {UserRegistration} from "../../types.tsx";
@@ -24,13 +24,15 @@ const Signup = () => {
     }
 
     const handleSignup = () => {
-        axios.post( API_URL + "/auth/register", user, {
-            headers: { 'Content-Type': 'application/json' }
-        }).then(
-            () => {
-                navigate("/")
+       axios.post(API_URL + "/auth/register", user, {
+            headers: {'Content-Type': 'application/json'}
+        }).then( () => {
+            navigate("/")
+       }).catch((error: Error | AxiosError) => {
+            if (axios.isAxiosError(error)) {
+                console.error(error)
             }
-        )
+        })
     }
 
     return (

@@ -38,18 +38,10 @@ export async function updatePost( post : UpdatePostRequest) {
 }
 
 
-export async function getAuthedUser(): Promise<User | undefined> {
-    try {
-
-        const {data} = await axios.get(`${API_URL}/user/authed-user`, getAxiosConfig())
-        if (data.code == 200) {
-            console.log(data.code)
-            return data.data.user as User;
-        } else {
-            return undefined;
-        }
-
-    } catch (error) {
-        console.log(error)
-    }
+export async function getAuthedUser(): Promise<User | void> {
+    return await axios.get(`${API_URL}/user/authed-user`, getAxiosConfig()).then((response) => {
+        return response.data.data.user as User
+    }).catch((error) => {
+        console.error(error)
+    });
 }
