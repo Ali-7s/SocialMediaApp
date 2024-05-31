@@ -1,14 +1,8 @@
 import {Avatar, Box, Hidden, Typography} from "@mui/material";
-import { User } from "../../types.tsx";
+import {useUserContext} from "../../hooks/useUserContext.tsx";
 
-interface UserProps {
-    user: User
-}
-
-export const Sidebar = ( { user } : UserProps )  => {
-
-
-
+export const Sidebar = ()  => {
+    const {user} = useUserContext();
     return (
         <Box
             sx={{

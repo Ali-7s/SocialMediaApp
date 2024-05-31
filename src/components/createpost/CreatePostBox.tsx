@@ -5,16 +5,13 @@ import {
     Typography
 } from "@mui/material";
 import React, {useState} from "react";
-import { PostRequest, User} from "../../types.tsx";
+import { PostRequest } from "../../types.tsx";
 import {createNewPost} from "../../api/api.ts";
 import {useMutation, useQueryClient} from "@tanstack/react-query";
+import {useUserContext} from "../../hooks/useUserContext.tsx";
 
-
-interface UserProps {
-    user: User
-}
-
-const CreatePostBox = (  { user } : UserProps) => {
+const CreatePostBox = () => {
+    const {user} = useUserContext();
     const queryClient = useQueryClient()
     const [post, setPost] = useState<PostRequest>({
         content: "",
