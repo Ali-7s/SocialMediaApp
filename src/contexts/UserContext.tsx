@@ -15,10 +15,11 @@ const UserContextProvider = ( { children } : UserContextProviderProps) => {
         "createdAt": "",
         "photoUrl": "",}
     )
+    const [auth, setAuth] = useState(false)
 
     return (
       <UserContext.Provider value={{
-          user, setUser
+          user, auth,  setUser, setAuth
       }}>
           {children}
       </UserContext.Provider>
