@@ -5,10 +5,11 @@ import {UserLogin} from "../../types.tsx";
 import {useNavigate} from "react-router-dom";
 import {API_URL} from "../../api/api.ts";
 import {toastError} from "../../services/ToastService.tsx";
+import {useUserContext} from "../../hooks/useUserContext.tsx";
 
 const Login = () => {
     const navigate = useNavigate();
-    const [auth, setAuth] = useState(false)
+    const { auth, setAuth} = useUserContext()
     const [user, setUser] = useState<UserLogin>(
         {
             email: '',

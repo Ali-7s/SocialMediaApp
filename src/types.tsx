@@ -44,7 +44,9 @@ export type UserContextProviderProps = {
 
 export type UserContextType = {
     user: User,
-    setUser:  React.Dispatch<React.SetStateAction<User>>
+    auth: boolean,
+    setUser:  React.Dispatch<React.SetStateAction<User>>,
+    setAuth:  React.Dispatch<React.SetStateAction<boolean>>
 }
 
 export type ValidationErrorResponse = {
