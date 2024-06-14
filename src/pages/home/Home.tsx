@@ -9,14 +9,23 @@ import {Box} from "@mui/material";
 import CreatePostBox from "../../components/createpost/CreatePostBox.tsx";
 import { useEffect, useState} from "react";
 import {useUserContext} from "../../hooks/useUserContext.tsx";
+import {useNavigate} from "react-router-dom";
+import {toastSuccess} from "../../services/ToastService.tsx";
 
 const Home = ( ) => {
-    const {setUser} = useUserContext();
+    const navigate = useNavigate();
+    const {setUser, auth} = useUserContext();
     const [posts, setPosts] = useState<Post[]>([])
 
     useEffect(() => {
-        getAuthedUser().then( user => setUser(user as User));
-    }, [setUser]);
+        if(!auth) {
+            navigate("/")
+            toastSuccess("Successfully logged out")
+        } else {
+            getAuthedUser().then( user => setUser(user as User));
+        }
+
+    }, [auth, navigate, setUser]);
 
 
     const {data, error, isSuccess} = useQuery({
