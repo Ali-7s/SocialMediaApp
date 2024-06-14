@@ -2,8 +2,24 @@ import {AppBar, Toolbar, IconButton, Typography, Box, Paper, InputBase, InputAdo
 
 import { Logout } from "@mui/icons-material";
 import  Search  from '@mui/icons-material/Search';
+import {useUserContext} from "../../hooks/useUserContext.tsx";
 
 const Navbar = () => {
+    const { auth, setAuth, setUser } = useUserContext();
+
+    const handleLogoutClick = () => {
+        setUser({
+            "id": 0,
+            "username": "",
+            "displayName": "",
+            "email": "",
+            "role": "",
+            "createdAt": "",
+            "photoUrl": "",})
+        setAuth( !auth);
+    }
+
+
     return (
         <AppBar sx={ { backgroundColor: "#61777F", color: "white", width: "100%"}}>
             <Toolbar sx={ { display: "flex", justifyContent: "space-between"}}>
@@ -44,7 +60,7 @@ const Navbar = () => {
 
 
 
-                <IconButton size='large' color='inherit' aria-label='logo' sx={ { display: "flex", justifySelf: "end"}}>
+                <IconButton onClick={handleLogoutClick} size='large' color='inherit' aria-label='logo' sx={ { display: "flex", justifySelf: "end"}}>
                     <Logout sx={ { marginRight: "5px"}} ></Logout>
                     <Typography>Log Out</Typography>
                 </IconButton>
