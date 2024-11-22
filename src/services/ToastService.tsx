@@ -16,7 +16,7 @@ export function toastInfo(message: string) {
 }
 
 export function toastSuccess(message: string) {
-    console.log("In toast success")
+    
     toast.success(message, toastConfig);
 }
 
