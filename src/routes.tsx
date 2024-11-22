@@ -3,28 +3,35 @@ import Home from "./pages/home/Home.tsx";
 import Login from "./pages/login/Login.tsx";
 import Signup from "./pages/signup/Signup.tsx";
 import Layout from "./layout/Layout.tsx";
+import Profile from "./pages/profile/Profile.tsx";
+import ChatApp from "./components/ChatApp.tsx";
 
 
 export const router = createBrowserRouter([
     {
-        path: "/home",
+        path: "/",
         element: <Layout/>,
         children: [
             {
                 path: "/home",
                 element: <Home/>,
+            },
+            {
+                path: "/:username",
+                element: <Profile/>
+            },
+            {
+                path: "/chat/:id",  // <-- Add dynamic :id here
+                element: <ChatApp/>
             }
-
         ]
     },
-
     {
-        path: "/",
+        path: "/login",
         element: <Login/>
     },
-
     {
         path: "/sign-up",
         element: <Signup/>
     }
-])
+]);

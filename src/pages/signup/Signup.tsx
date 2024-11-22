@@ -22,7 +22,7 @@ const Signup = () => {
 
     const handleSignupClick  = () => {
         handleSignup()
-        console.log(user)
+        
     }
 
     const handleSignup = () => {
@@ -30,7 +30,7 @@ const Signup = () => {
             headers: {'Content-Type': 'application/json'}
         }).then( () => {
             toastSuccess("Account successfully created")
-            navigate("/")
+            navigate("/login")
        }).catch((error: Error | AxiosError) => {
             if (axios.isAxiosError(error)) {
                 setErrors(error.response?.data.data.errors)

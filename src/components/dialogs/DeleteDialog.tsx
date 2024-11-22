@@ -2,7 +2,6 @@ import {Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogT
 import {useMutation, useQueryClient} from "@tanstack/react-query";
 import {deletePost} from "../../api/api.ts";
 import {toastError, toastSuccess} from "../../services/ToastService.tsx";
-
 type DeleteDialogProps = {
     open: boolean,
     id: number
@@ -22,7 +21,9 @@ const DeleteDialog = ( { open, id, toggleDialog } : DeleteDialogProps) => {
             mutationFn: deletePost,
             onSuccess: () => {
                 toastSuccess("Post successfully deleted")
-                queryClient.invalidateQueries( {queryKey: ["posts"]}).then();
+                queryClient.invalidateQueries( {queryKey: ["posts"]}).then( () => {
+                    toggleDialog()
+                });
             },
             onError: error => {
                 toastError(error.message)

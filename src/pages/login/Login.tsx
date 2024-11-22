@@ -1,74 +1,92 @@
-import {Box, Button, TextField, Typography} from "@mui/material";
-import React, {useEffect, useState} from "react";
+import { Box, Button, TextField, Typography } from "@mui/material";
+import React, { useState } from "react";
 import axios, {AxiosError} from "axios";
-import {UserLogin} from "../../types.tsx";
-import {useNavigate} from "react-router-dom";
-import {API_URL} from "../../api/api.ts";
-import {toastError} from "../../services/ToastService.tsx";
-import {useUserContext} from "../../hooks/useUserContext.tsx";
+import { User, UserLogin } from "../../types.tsx";
+import { useNavigate } from "react-router-dom";
+import { API_URL, getAuthedUser } from "../../api/api.ts";
+import { toastError, toastSuccess } from "../../services/ToastService.tsx";
+import { useUserContext } from "../../hooks/useUserContext.tsx";
 
 const Login = () => {
     const navigate = useNavigate();
-    const { auth, setAuth} = useUserContext()
-    const [user, setUser] = useState<UserLogin>(
-        {
-            email: '',
-            password: ''
-        }
-    )
-
-    useEffect(() => {
-        if(auth) {
-            navigate("/home")
-        }
-
-    }, [auth, navigate]);
-
-
-    const handleLoginClick  = () => {
-        handleLogin()
-        console.log(user)
-    }
-
-    const handleSignUpClick = () => {
-        console.log("Sign up clicked")
-        navigate("/sign-up")
-    }
+    const { setUser, setAuth } = useUserContext();
+    const [userLogin, setUserLogin] = useState<UserLogin>({ email: "", password: "" });
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setUser({...user, [event.target.name]: event.target.value})
-    }
-    const handleLogin = () => {
-        axios.post( API_URL + "/auth/login", user, {
-            headers: { 'Content-Type': 'application/json' }
-        })
-            .then(res => {
-                const jwtToken = res.headers.authorization;
-                if (jwtToken !== null) {
-                    sessionStorage.setItem("jwt", jwtToken);
-                    setAuth(true);
-                }
-            }).catch((error: Error | AxiosError) => {
-            if (axios.isAxiosError(error)) {
-                toastError("Login failed. Please try again")
-            }
-        })
+        setUserLogin({ ...userLogin, [event.target.name]: event.target.value });
+    };
 
-    }
+    const handleLogin = async () => {
+        try {
+            const response = await axios.post(`${API_URL}/auth/login`, userLogin, {
+                headers: { "Content-Type": "application/json" },
+            });
+            const jwtToken = response.headers.authorization;
+
+            if (jwtToken) {
+                sessionStorage.setItem("jwt", jwtToken);
+                const authedUser = await getAuthedUser() as User;
+                setUser(authedUser);
+                setAuth(true);
+                toastSuccess("Logged in successfully");
+                navigate("/home");
+            }
+        } catch (error: Error | AxiosError) {
+            if (axios.isAxiosError(error)) {
+                toastError("Login failed. Please try again");
+            }
+        }
+    };
 
     return (
         <>
-            <Box sx = { { width: "100vw", height: "100vh", display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column", margin: "0 auto"}}>
-                <form style = { { display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column", width: "400px", height: "350px"}}>
+            <Box
+                sx={{
+                    width: "100vw",
+                    height: "100vh",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    flexDirection: "column",
+                    margin: "0 auto",
+                }}
+            >
+                <Typography
+                    variant="h4"
+                    sx={{
+                        marginBottom: "20px",
+                        color: "#61777F",
+                        fontWeight: "bold",
+                        letterSpacing: "1.5px",
+                    }}
+                >
+                    A Social
+                </Typography>
+
+                <form
+                    style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        flexDirection: "column",
+                        width: "400px",
+                        height: "250px",
+                    }}
+                >
                     <TextField
                         variant={"standard"}
                         required
                         label={"Email"}
                         name="email"
-                        sx = { { width: "100%", border: 0, borderBottom: "1px solid grey", margin: "5px", color: "#61777F"}}
+                        sx={{
+                            width: "100%",
+                            border: 0,
+                            borderBottom: "1px solid grey",
+                            margin: "5px",
+                            color: "#61777F",
+                        }}
                         onChange={handleChange}
-                    >
-                    </TextField>
+                    ></TextField>
 
                     <TextField
                         variant={"standard"}
@@ -76,15 +94,41 @@ const Login = () => {
                         label={"Password"}
                         type={"password"}
                         name="password"
-                        sx = { { width: "100%", border: 0, borderBottom: "1px solid grey", margin: "5px"}}
+                        sx={{
+                            width: "100%",
+                            border: 0,
+                            borderBottom: "1px solid grey",
+                            margin: "5px",
+                        }}
                         onChange={handleChange}
-                    >
-                    </TextField>
-                    <Button sx = { { margin: "5px", color: "#61777F"}} onClick={handleLoginClick}>Login</Button>
-                    <Typography sx={ { color: "black" }}>Don't have an account? <Button onClick={handleSignUpClick}>Sign up</Button></Typography>
-                </form>
-            </Box>
+                    ></TextField>
 
+                    <Button
+                        sx={{
+                            margin: "5px",
+                            color: "#61777F",
+                        }}
+                        onClick={handleLogin}
+                    >
+                        Login
+                    </Button>
+                </form>
+
+                <Typography variant="body2" sx={{ marginTop: 1, color: "black" }}>
+                    Don't have an account?{" "}
+                    <Button
+                        variant="text"
+                        onClick={() => navigate("/sign-up")}
+                        sx={{
+                            textTransform: "none",
+                            padding: 0,
+                            color: "#61777F",
+                        }}
+                    >
+                        Sign up
+                    </Button>
+                </Typography>
+            </Box>
         </>
     );
 };

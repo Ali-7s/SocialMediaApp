@@ -1,24 +1,22 @@
 import {
-    Avatar, Box,
+    Box,
     Button,
     TextField,
     Typography
 } from "@mui/material";
 import React, {useState} from "react";
-import { PostRequest } from "../../types.tsx";
+import { PostRequest} from "../../types.tsx";
 import {createNewPost} from "../../api/api.ts";
 import {useMutation, useQueryClient} from "@tanstack/react-query";
-import {useUserContext} from "../../hooks/useUserContext.tsx";
 
 const CreatePostBox = () => {
-    const {user} = useUserContext();
     const queryClient = useQueryClient()
     const [post, setPost] = useState<PostRequest>({
         content: "",
     })
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setPost( {...post, [event.target.name]: event.target.value})
+        setPost({...post, [event.target.name]: event.target.value})
     }
 
 
@@ -29,8 +27,8 @@ const CreatePostBox = () => {
     const createMutation = useMutation({
         mutationFn: createNewPost,
         onSuccess: () => {
-            console.log("Success");
-            queryClient.invalidateQueries( {queryKey: ["posts"]}).then( () => {
+            
+            queryClient.invalidateQueries({queryKey: ["posts"]}).then(() => {
                 setPost({...post, content: ""})
             })
         },
@@ -41,12 +39,14 @@ const CreatePostBox = () => {
 
     return (
         <>
-            <Box sx = { { display: "flex", marginBottom: "30px"}} >
-
-                   <Avatar sx={ { width: "7.8%", height: "9%", marginRight: "5px", marginTop: "5px"}} aria-label="avatar" src={user.photoUrl}/>
-
+            <Box sx={{
+                gridColumn: "2/5",
+                padding: "2em",
+                backgroundColor: "white",
+                border: "solid 1px lightgrey",
+                borderRadius: "0,9em"
+            }}>
                 <TextField
-                    sx={ { width: "100%"}}
                     name={"content"}
                     value={post.content}
                     placeholder={"Create a new post!"}
@@ -54,15 +54,41 @@ const CreatePostBox = () => {
                     onChange={handleChange}
                     inputProps={{
                         maxLength: 255
-                    }}/>
+                    }}
+                    sx = { {  marginTop: "1px", '&:hover': {
 
-                    <Button variant={"outlined"} onClick={handleButtonClick}> <Typography>Post</Typography></Button>
+                            backgroundColor: "white",
+                            color: "#c7c0c0",
+                            border: "none",
+                        },
+
+                        '&:focus': {
+                        border: "none",
+                            fieldset: "solid 1px lightgrey",
+                        },
+
+                        fieldset: {
+                        border: "solid 1px lightgrey",
+                        }
+
+
+
+                    }}
+
+
+
+                />
+                <Button variant={"outlined"} sx={{
+                    marginTop: "5px", backgroundColor: "#c7c0c0", color: "white", borderColor: "#c7c0c0", '&:hover': {
+                        backgroundColor: "white",
+                        color: "#c7c0c0",
+                        border: "solid 1px #c7c0c0",
+                    }
+                }} onClick={handleButtonClick}> <Typography>Post</Typography></Button>
             </Box>
         </>
 
     )
-
-
 
 }
 
