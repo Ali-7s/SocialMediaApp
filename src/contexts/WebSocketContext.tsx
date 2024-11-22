@@ -1,5 +1,7 @@
 import React, { createContext, useContext, useEffect, useRef, useState } from 'react';
 import { Client } from '@stomp/stompjs';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-expect-error
 import SockJS from 'sockjs-client/dist/sockjs';
 import { Message, WebSocketContextProviderProps } from '../types';
 
