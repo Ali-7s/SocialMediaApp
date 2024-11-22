@@ -22,7 +22,7 @@ export const WebSocketProvider: React.FC<WebSocketContextProviderProps> = ({ tok
         if (token) {
             const client = new Client({
                 connectHeaders: { Authorization: `Bearer ${token}` },
-                webSocketFactory: () => new SockJS('http://localhost:8080/ws'),
+                webSocketFactory: () => new SockJS('https://socialmediaapi-production-88fb.up.railway.app/ws'),
                 onConnect: () => {
                     setIsConnected(true);
                     client.subscribe('/user/queue/messages', (msg) => {

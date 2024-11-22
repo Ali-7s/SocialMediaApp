@@ -13,7 +13,7 @@ import {
 
 
 
-export const API_URL = 'http://localhost:8080/api';
+export const API_URL = 'https://socialmediaapi-production-88fb.up.railway.app/api';
 
 
 const axiosInstance = axios.create({
@@ -47,7 +47,7 @@ axiosInstance.interceptors.response.use(
             try {
                 
                 
-                const response = await axios.get(`http://localhost:8080/api/auth/refresh/${sessionStorage.getItem("user")}`)
+                const response = await axios.get(`https://socialmediaapi-production-88fb.up.railway.app/api/auth/refresh/${sessionStorage.getItem("user")}`)
                 
                 sessionStorage.removeItem("jwt")
                 
