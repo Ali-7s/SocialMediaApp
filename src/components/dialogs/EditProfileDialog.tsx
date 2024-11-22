@@ -8,7 +8,7 @@ import {
     TextField
 } from "@mui/material";
 import {useUserContext} from "../../hooks/useUserContext.tsx";
-import React, {LegacyRef, useEffect, useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {UpdateUserProfileReq, User} from "../../types.tsx";
 import {getAuthedUser, setUserProfileImg, updateProfile, useGetUserImage} from "../../api/api.ts";
 import {toastSuccess} from "../../services/ToastService.tsx";
@@ -23,7 +23,7 @@ type EditProfileDialogProps = {
 const EditProfileDialog = ({open, toggleDialog}: EditProfileDialogProps) => {
     const {user, setUser} = useUserContext();
     const queryClient = useQueryClient();
-    const inputRef = useRef<LegacyRef<HTMLInputElement>>();
+    const inputRef = useRef<HTMLInputElement>(null);
     const [file, setFile] = useState<File>();
     const [userReq, setUserReq] = useState<UpdateUserProfileReq>({
         displayName: user.displayName,

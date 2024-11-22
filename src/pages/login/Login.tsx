@@ -1,6 +1,6 @@
 import { Box, Button, TextField, Typography } from "@mui/material";
 import React, { useState } from "react";
-import axios, {AxiosError} from "axios";
+import axios from "axios";
 import { User, UserLogin } from "../../types.tsx";
 import { useNavigate } from "react-router-dom";
 import { API_URL, getAuthedUser } from "../../api/api.ts";
@@ -31,7 +31,7 @@ const Login = () => {
                 toastSuccess("Logged in successfully");
                 navigate("/home");
             }
-        } catch (error: Error | AxiosError) {
+        } catch (error: unknown) {
             if (axios.isAxiosError(error)) {
                 toastError("Login failed. Please try again");
             }
