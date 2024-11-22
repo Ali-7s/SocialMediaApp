@@ -56,9 +56,9 @@ export type WebSocketContextProviderProps = {
 }
 
 export type UserContextType = {
-    user: User,
+    user: UserSummary,
     auth: boolean,
-    setUser:  React.Dispatch<React.SetStateAction<User>>,
+    setUser:  React.Dispatch<React.SetStateAction<UserSummary>>,
     setAuth:  React.Dispatch<React.SetStateAction<boolean>>,
 }
 
@@ -78,6 +78,7 @@ export type Conversation = {
     userSummary: UserSummary;
     lastMessage: Message;
 };
+
 
 
 

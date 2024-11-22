@@ -116,11 +116,18 @@ const Profile = () => {
         setFollowerDialogOpen(!followerDialogOpen);
     }
 
-    const handleBoxClick = (e) => {
+    const handleBoxClick = (e: React.MouseEvent<HTMLDivElement>) => {
         e.preventDefault();
+
         const name = e.currentTarget.getAttribute('data-name');
-        setBoxName(name);
-        toggleFollowerDialog()
+
+        if (name !== null) {
+            setBoxName(name);
+        } else {
+            console.warn('Attribute "data-name" not found on the clicked element.');
+        }
+
+        toggleFollowerDialog();
     }
 
     
