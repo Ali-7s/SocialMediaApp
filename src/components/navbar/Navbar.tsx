@@ -19,9 +19,6 @@ const Navbar = () => {
             id: 0,
             username: "",
             displayName: "",
-            email: "",
-            role: "",
-            createdAt: "",
             photoUrl: "",
         });
         sessionStorage.removeItem("jwt");
