@@ -4,7 +4,7 @@ import {Avatar, Button, CardActions, CardHeader, TextField, Typography} from "@m
 import {Post, UpdatePostRequest} from "../../types.tsx";
 import React, {useEffect, useState} from "react";
 import {useMutation, useQueryClient} from "@tanstack/react-query";
-import { updatePost} from "../../api/api.ts";
+import {updatePost} from "../../api/api.ts";
 import {formatDate} from "./util/FormatDate.tsx";
 import {toastError, toastSuccess} from "../../services/ToastService.tsx";
 
