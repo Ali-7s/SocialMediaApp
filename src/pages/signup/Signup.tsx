@@ -26,7 +26,7 @@ const Signup = () => {
     }
 
     const handleSignup = () => {
-       axios.post(API_URL + "/auth/register", user, {
+       axios.post(API_URL + "/api/auth/register", user, {
             headers: {'Content-Type': 'application/json'}
         }).then( () => {
             toastSuccess("Account successfully created")

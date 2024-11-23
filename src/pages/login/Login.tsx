@@ -18,7 +18,7 @@ const Login = () => {
 
     const handleLogin = async () => {
         try {
-            const response = await axios.post(`${API_URL}/auth/login`, userLogin, {
+            const response = await axios.post(`${API_URL}/api/auth/login`, userLogin, {
                 headers: { "Content-Type": "application/json" },
             });
             const jwtToken = response.headers.authorization;
