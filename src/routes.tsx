@@ -21,7 +21,7 @@ export const router = createBrowserRouter([
                 element: <Profile/>
             },
             {
-                path: "/chat/:id",  // <-- Add dynamic :id here
+                path: "/chat/:id",
                 element: <ChatApp/>
             }
         ]
