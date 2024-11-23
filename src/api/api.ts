@@ -13,7 +13,7 @@ import {
 
 
 
-export const API_URL = 'https://socialmediaapi-production-88fb.up.railway.app/api';
+export const API_URL = import.meta.env.VITE_API_URL  || 'http://localhost:8080';
 
 
 const axiosInstance = axios.create({
@@ -47,7 +47,7 @@ axiosInstance.interceptors.response.use(
             try {
                 
                 
-                const response = await axios.get(`https://socialmediaapi-production-88fb.up.railway.app/api/auth/refresh/${sessionStorage.getItem("user")}`)
+                const response = await axios.get(`${API_URL}/api/${sessionStorage.getItem("user")}`)
                 
                 sessionStorage.removeItem("jwt")
                 
@@ -66,54 +66,54 @@ axiosInstance.interceptors.response.use(
 
 
 export async function getPosts(page: number): Promise<Pageable> {
-    const response = await axiosInstance.get(`${API_URL}/posts?page=${page}`)
+    const response = await axiosInstance.get(`/api/posts?page=${page}`)
     return response.data.data.posts;
 }
 
 
 export async function getUserPosts(page: number, id: number): Promise<Pageable> {
-    const response = await axiosInstance.get(`${API_URL}/posts/user/${id}?page=${page}`)
+    const response = await axiosInstance.get(`/api/posts/user/${id}?page=${page}`)
 
     return response.data.data.posts;
 }
 
 export async function getUserFollowingPosts(page: number): Promise<Pageable> {
-    const response = await axiosInstance.get(`${API_URL}/posts/user/following?page=${page}`)
+    const response = await axiosInstance.get(`/api/posts/user/following?page=${page}`)
     return response.data.data.posts;
 }
 
 export async function getUserLikedPosts(page: number): Promise<Pageable> {
-    const response = await axiosInstance.get(`${API_URL}/posts/likes?page=${page}`)
+    const response = await axiosInstance.get(`/api/posts/likes?page=${page}`)
     
     return response.data.data.posts;
 }
 
 export async function getUserLikedPostsId(): Promise<number[]> {
-    const response = await axiosInstance.get(`${API_URL}/posts/likes/ids`)
+    const response = await axiosInstance.get(`/api/posts/likes/ids`)
     return response.data.data.posts;
 }
 
 
 
 export async function likePost(id: number) {
-    return axiosInstance.put(`/posts/${id}/like`).catch((error) => {
+    return axiosInstance.put(`/api/posts/${id}/like`).catch((error) => {
         console.error(error)
     });
 }
 
 export async function unlikePost(id: number) {
-    return axiosInstance.put(`/posts/${id}/unlike`);
+    return axiosInstance.put(`/api/posts/${id}/unlike`);
 }
 
 export async function deletePost(id: number)  {
-    return await axiosInstance.delete(`${API_URL}/posts/${id}`);
+    return await axiosInstance.delete(`/api/posts/${id}`);
 }
 
 export async function createNewPost(  post  : PostRequest): Promise<Post> {
     if(post.content === "") {
         throw new Error("Post content cannot be empty");
     }
-    const response = await axiosInstance.post(`${API_URL}/posts`, post).catch((error) => {
+    const response = await axiosInstance.post(`/api/posts`, post).catch((error) => {
         console.error(error)
     });
     return response?.data.data.post;
@@ -124,12 +124,12 @@ export async function updatePost( post : UpdatePostRequest) {
         throw new Error("Post content cannot be empty");
     }
 
-    return await axiosInstance.put(`/posts/${post.id}`, post)
+    return await axiosInstance.put(`/api/posts/${post.id}`, post)
 }
 
 
 export async function getAuthedUser(): Promise<User | void> {
-    return await axiosInstance.get(`/users/me`).then((response) => {
+    return await axiosInstance.get(`/api/users/me`).then((response) => {
         
         return response.data.data.user as User
     }).catch((error) => {
@@ -139,7 +139,7 @@ export async function getAuthedUser(): Promise<User | void> {
 }
 
 export async function getUser(id: number): Promise<UserProfile | void> {
-    return await axiosInstance.get(`/users/${id}`).then((response) => {
+    return await axiosInstance.get(`/api/users/${id}`).then((response) => {
         
         return response.data.data.user as UserProfile
     }).catch((error) => {
@@ -147,7 +147,7 @@ export async function getUser(id: number): Promise<UserProfile | void> {
     });
 }
 export async function followUser(followingId: number) {
-    const response = axiosInstance.post(`/users/follow/${followingId}`)
+    const response = axiosInstance.post(`/api/users/follow/${followingId}`)
     return response.then((response) => {
         return response.data
     }).catch((error) => {
@@ -157,7 +157,7 @@ export async function followUser(followingId: number) {
 
 
 export async function unfollowUser(followingId: number) {
-    const response = axiosInstance.delete(`/users/unfollow/${followingId}`)
+    const response = axiosInstance.delete(`/api/users/unfollow/${followingId}`)
     return response.then((response) => {
         return response.data
     }).catch((error) => {
@@ -166,7 +166,7 @@ export async function unfollowUser(followingId: number) {
 }
 
 export async function getUserProfileImg(id: number) {
-    return await axiosInstance.get(`${API_URL}/users/${id}/photo`).then(
+    return await axiosInstance.get(`/api/users/${id}/photo`).then(
         (response) => {
             return response.data
         }
@@ -183,13 +183,13 @@ export async function setUserProfileImg(file: File) {
             }
         }
     }
-    return await axiosInstance.post(`${API_URL}/users/photo`, formData, axiosConfig()).catch((error) => {
+    return await axiosInstance.post(`/api/users/photo`, formData, axiosConfig()).catch((error) => {
         console.error(error)
     });
 }
 
 export async function getFollowers(id: number): Promise<UserSummary[]> {
-    return await axiosInstance.get(`/users/${id}/followers`).then((response) => {
+    return await axiosInstance.get(`/api/users/${id}/followers`).then((response) => {
         return response.data.data.followers
     }).catch((error) => {
         console.error(error)
@@ -197,7 +197,7 @@ export async function getFollowers(id: number): Promise<UserSummary[]> {
 }
 
 export async function getFollowing(id: number): Promise<UserSummary[]> {
-    return await axiosInstance.get(`${API_URL}/users/${id}/following`).then((response) => {
+    return await axiosInstance.get(`/api/users/${id}/following`).then((response) => {
         return response.data.data.following
     }).catch((error) => {
         console.error(error)
@@ -225,45 +225,23 @@ export function useGetUserImage(id: number) {
     })
 }
 
-//
-// export function useGetUserImages(userIds: number[]) {
-//     return useQueries({
-//         queries: userIds.map((id) => ({
-//             queryKey: ['profileImage', id],
-//             queryFn: () => getUserProfileImg(id),
-//             staleTime: Infinity,
-//             select: (data) => {
-//                 return ({ id, image: data });
-//             },
-//         })),
-//     });
-// }
 
-// export async function updateProfile() {
-//     const response = await axiosInstance.patch(`${API_URL}/users`, updateProfile)
-//
-// }
 
 export async function updateProfile( profile : UpdateUserProfileReq) {
-    return await axiosInstance.patch(`${API_URL}/users`, profile)
+    return await axiosInstance.patch(`/api/users`, profile)
 }
 
-// // Send a message
-// export const sendMessageToServer = async (chatMessage: Message): Promise<Message> => {
-//     const response = await axiosInstance.post(`${API_URL}/chat/send`, chatMessage);
-//     return response.data;
-// };
 
 // Fetch chat messages between sender and recipient
 export const fetchMessages = async (senderId: number, recipientId: number): Promise<Message[]> => {
-    const response = await axiosInstance.get(`/chat/messages/${senderId}/${recipientId}`);
+    const response = await axiosInstance.get(`/api/chat/messages/${senderId}/${recipientId}`);
     
     return response.data;
 };
 
 // Fetch all conversations for a user with the last message from each conversation
 export const fetchConversations = async (userId: number): Promise<Conversation[]> => {
-    const response = await axiosInstance.get(`/chat/conversations/${userId}`);
+    const response = await axiosInstance.get(`/api/chat/conversations/${userId}`);
     return response.data;
 };
 
@@ -276,7 +254,7 @@ export const useConversations = (userId: number) => {
 
 // Fetch user profile
 export const getUserProfile = async (userId: number): Promise<UserProfile> => {
-    const response = await axiosInstance.get(`${API_URL}/users/${userId}`);
+    const response = await axiosInstance.get(`/api/users/${userId}`);
     return response.data.data.user;
 };
 
